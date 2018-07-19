@@ -6,6 +6,8 @@
 
 > Via the Things portal (did not find API to create user)
 
+[jec] Did not find anything either.  This will likely just be a general username password to access the network.
+
 * User Name -> `lpwan:users:username`
 * Email -> `lpwan:users:email`
 * Password -> `lpwan:users:passwordHash`
@@ -16,22 +18,29 @@
 
 ```
 POST /applications
+
+[jec] code I am seeing says create an ID with POST, and PUT to add everything else.
+https://www.thethingsnetwork.org/docs/applications/manager/api.html#registerapplication
+https://www.thethingsnetwork.org/docs/applications/manager/api.html#setapplication 
+
 {
-  id: '' -> **?**
+  id: '' -> **?**  [jec] might as well use lpwan:applications:id
   name: String `lpwan:applications:name`
-  euis: [String] -> **?**   // list of euis app is reachable at
-  rights: [String] -> **?** //  list of rights current user has for the app (which user?)
-  collaborators: [{ -> **?**
+  euis: [String] -> **?**   // list of euis app is reachable at [jec] OK, weird thing: appEUI WAS a thing in LoraOpenSource
+                            //                                        but was dropped as not really needed.  We may need to
+                            //                                        add that back in to the applicationNetworkTypeLinks.
+  rights: [String] -> **?** //  list of rights current user has for the app (which user?) [jec] don't know what this is
+  collaborators: [{ -> **?** [jec] nor this
     username: String
     email: String
     rights: [String] # list of rights collaborator has to the applicaiton
   }]
-  access_keys: [{ -> **?**
+  access_keys: [{ -> **?** [jec] nor this.  Though there was something about access keys to access data by api (not mqtt)
     name: String
     key: String
     rights: [String] # the rights the key will grant if used
   }]
-  created: Date-Time
+  created: Date-Time 
   deleted: Date-Time # only if app was deleted
 }
 ```
